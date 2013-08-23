@@ -1,20 +1,19 @@
 CacheStore::Application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
 
-  # In the development environment your application's code is reloaded on
-  # every request. This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
-
   # Do not eager load code on boot.
   config.eager_load = false
-
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
-
-  # Enable caching with dalli
+  # Enable caching with redis now
   config.action_controller.perform_caching = true
-  config.cache_store = :dalli_store
+  # Setting expiry
+  config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
+
+  config.action_dispatch.rack_cache = {
+    metastore:   'redis://localhost:6379/1/metastore',
+    entitystore: 'redis://localhost:6379/1/entitystore'
+}
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
