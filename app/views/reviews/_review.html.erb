@@ -1,9 +1,12 @@
-<!-- Singular review partial -->
-<div class = "review">
-  <%= render review.user %>
+<% cache review.user do %>
+  <!-- Singular review partial -->
+  <div class = "review">
+      <%= render review.user %>
 
-  <h4>Review</h4>
-  <p><%= review.body %></p>
-  <p><em>Created at: <%= review.created_at %></em></p>
+    <h4>Review</h4>
+    <p><%= review.body %></p>
+    <p><em>Created at: <%= review.created_at %></em></p>
 
-</div>
+  </div>
+
+<% end %>
